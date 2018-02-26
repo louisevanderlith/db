@@ -10,8 +10,11 @@ Built to enable easier creation and management of data.
 * Reduced usage of 'interface{}' as params
 * Databases operate on a single Context (Ctx)
 * Simplified reading when working with multiple databases. [dbName].Ctx.[tableName].[operation]
+* Soft delete only. The `Deleted` column's value will be set to true.
 
-### This project was built for use with PostgreSQL.
+### Note 
+This project was built for use with PostgreSQL, and is tested as such.
+Currently 'postgre' is hard coded as the database provider, but this can be changed as any provider supported by beego/orm can be used.
 
 ## Installation
 * Ensure PostrgreSQL is installed. (version 9.6 & above)
