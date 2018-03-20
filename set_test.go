@@ -11,7 +11,7 @@ func TestNewContext(t *testing.T) {
 func TestSet_Create(t *testing.T) {
 	row := newTestTable()
 	row.Name = "ABC"
-	row.ID = 99
+	row.Id = 99
 
 	testCtx.TableA.Create(row)
 
@@ -30,12 +30,12 @@ func TestSet_Create(t *testing.T) {
 func TestSet_Read(t *testing.T) {
 	row := newTestTable()
 	row.Name = "ABC"
-	row.ID = 99
+	row.Id = 99
 	testCtx.TableA.Create(row)
 
 	rowb := newTestTable()
 	rowb.Name = "DEF"
-	rowb.ID = 98
+	rowb.Id = 98
 	rowb.Deleted = true
 	testCtx.TableA.Create(rowb)
 
@@ -57,11 +57,11 @@ func TestSet_Read(t *testing.T) {
 func TestSet_ReadOne_Nil(t *testing.T) {
 	row := newTestTable()
 	row.Name = "ABC"
-	row.ID = 55
+	row.Id = 55
 	row.Deleted = true
 	testCtx.TableA.Create(row)
 
-	record, err := testCtx.TableA.ReadOne(&testTable{Record: Record{ID: 55}})
+	record, err := testCtx.TableA.ReadOne(&testTable{Record: Record{Id: 55}})
 
 	if err != nil {
 		t.Error(err)
@@ -75,10 +75,10 @@ func TestSet_ReadOne_Nil(t *testing.T) {
 func TestSet_ReadOne(t *testing.T) {
 	row := newTestTable()
 	row.Name = "ABC"
-	row.ID = 56
+	row.Id = 56
 	testCtx.TableA.Create(row)
 
-	record, err := testCtx.TableA.ReadOne(&testTable{Record: Record{ID: 56}})
+	record, err := testCtx.TableA.ReadOne(&testTable{Record: Record{Id: 56}})
 
 	if err != nil {
 		t.Error(err)
@@ -92,14 +92,14 @@ func TestSet_ReadOne(t *testing.T) {
 func TestSet_Update(t *testing.T) {
 	row := newTestTable()
 	row.Name = "ABC"
-	row.ID = 56
+	row.Id = 56
 	testCtx.TableA.Create(row)
 
 	row.Age = 18
 
 	testCtx.TableA.Update(row)
 
-	record, err := testCtx.TableA.ReadOne(&testTable{Record: Record{ID: 56}})
+	record, err := testCtx.TableA.ReadOne(&testTable{Record: Record{Id: 56}})
 
 	if err != nil {
 		t.Error(err)
@@ -114,12 +114,12 @@ func TestSet_Update(t *testing.T) {
 func TestSet_Delete(t *testing.T) {
 	row := newTestTable()
 	row.Name = "ABC"
-	row.ID = 99
+	row.Id = 99
 	row.Deleted = false
 
 	testCtx.TableA.Create(row)
 
-	record, err := testCtx.TableA.ReadOne(&testTable{Record: Record{ID: 99}})
+	record, err := testCtx.TableA.ReadOne(&testTable{Record: Record{Id: 99}})
 
 	if err != nil {
 		t.Error(err)

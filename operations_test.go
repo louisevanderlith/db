@@ -9,7 +9,7 @@ func TestGetFilterValues_Pointers(t *testing.T) {
 	actual := getFilterValues(&input)
 
 	if val, ok := actual["Relation"]; ok {
-		t.Error("Pointer has value %s", val)
+		t.Errorf("Pointer has value %s", val)
 	}
 }
 
@@ -32,7 +32,25 @@ func TestGetRelationships(t *testing.T) {
 		fields := getReadColumns(v)
 
 		if len(fields) <= 0 {
-			t.Errorf("no fields found")
+			t.Error("no fields found")
+		}
+	}
+}
+
+func TestNestedRelationshipsModel(t *testing.T) {
+	input := testTableB{}
+	input.Relation = &testTable{
+		Name: "RELATE",
+		Age:  99,
+	}
+
+	relationships := getRelationships(&input)
+
+	for _, v := range relationships {
+		readCols := getReadColumns(v)
+
+		if len(readCols) <= 0 {
+			t.Error("Exptected items in readCols.")
 		}
 	}
 }

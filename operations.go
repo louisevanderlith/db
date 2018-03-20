@@ -82,7 +82,8 @@ func getRelationships(obj interface{}) []interface{} {
 
 		if typeField.Type.Kind() == reflect.Ptr || typeField.Type.Kind() == reflect.Slice {
 			value := valueField.Interface()
-			if value != nil {
+
+			if !valueField.IsNil() && value != nil {
 				switch reflect.TypeOf(value).Kind() {
 				case reflect.Slice:
 					s := reflect.ValueOf(value)
