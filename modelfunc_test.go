@@ -5,7 +5,7 @@ import (
 )
 
 func TestGetFilterValues_Pointers(t *testing.T) {
-	input := testTableB{}
+	input := tablea{}
 	actual := getFilterValues(&input)
 
 	if val, ok := actual["Relation"]; ok {
@@ -14,16 +14,14 @@ func TestGetFilterValues_Pointers(t *testing.T) {
 }
 
 func TestGetRelationships(t *testing.T) {
-	input := testTableB{}
-	input.Collections = []*testTable{
-		&testTable{
+	input := tablea{}
+	input.Collections = []*tablea{
+		&tablea{
 			Name: "TEST",
-			Age:  8,
 		},
 	}
-	input.Relation = &testTable{
+	input.Relation = &tablea{
 		Name: "RELATE",
-		Age:  99,
 	}
 
 	actual := getRelationships(&input)
@@ -38,10 +36,9 @@ func TestGetRelationships(t *testing.T) {
 }
 
 func TestNestedRelationshipsModel(t *testing.T) {
-	input := testTableB{}
-	input.Relation = &testTable{
+	input := tablea{}
+	input.Relation = &tablea{
 		Name: "RELATE",
-		Age:  99,
 	}
 
 	relationships := getRelationships(&input)

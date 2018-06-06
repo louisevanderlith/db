@@ -2,73 +2,8 @@ package db
 
 import (
 	"reflect"
-	"strings"
 	"time"
-
-	"github.com/astaxie/beego/orm"
 )
-
-func insert(obj interface{}) (int64, error) {
-	o := orm.NewOrm()
-
-	relationships := getRelationships(obj)
-
-	id, err := o.Insert(obj)
-
-	if err == nil {
-		for _, v := range relationships {
-			o.Insert(v)
-		}
-	}
-
-	return id, err
-}
-
-func insertMulti(batchCount int, objs interface{}) (int64, error) {
-	o := orm.NewOrm()
-
-	return o.InsertMulti(batchCount, objs)
-}
-
-func read(obj interface{}, related ...string) error {
-	readColumns := getReadColumns(obj)
-
-	o := orm.NewOrm()
-	err := o.Read(obj, readColumns...)
-
-	for _, v := range related {
-		o.LoadRelated(obj, v)
-	}
-
-	return err
-}
-
-func readAll(filter interface{}, container interface{}) error {
-	readColumns := getFilterValues(filter)
-
-	o := orm.NewOrm()
-	qt := o.QueryTable(filter)
-
-	for k, v := range readColumns {
-		qt = qt.Filter(strings.ToLower(k), v)
-	}
-
-	qt = qt.Filter("deleted", false)
-	_, err := qt.All(container)
-
-	return err
-}
-
-func update(obj interface{}) (int64, error) {
-	o := orm.NewOrm()
-	relationships := getRelationships(obj)
-
-	for _, v := range relationships {
-		o.Update(v, getReadColumns(v)...)
-	}
-
-	return o.Update(obj, getReadColumns(obj)...)
-}
 
 // getRelationships returns the objects related to the current object
 func getRelationships(obj interface{}) []interface{} {
