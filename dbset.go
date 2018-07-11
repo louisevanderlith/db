@@ -40,7 +40,7 @@ func (set *dbSet) Create(item IRecord) (id int64, err error) {
 
 func tryCreate(item IRecord) (id int64, err error) {
 	var valid bool
-	valid, err = item.Validate()
+	valid, err = item.IsValid()
 
 	if valid {
 		var exists bool
